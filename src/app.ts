@@ -1253,7 +1253,8 @@ export function createRouter({
       access: "admin",
       resource: "sends",
       title: "Get a send",
-      summary: "One send: its view, and the outcome breakdown of its record.",
+      summary:
+        "One send: its view, and the outcome breakdown of its record. A sent send carries its completed hand-off duration as `dispatch.duration_ms`, in milliseconds.",
       description:
         "The answer carries `ETag`: the send's `rev` and a tag of what the clock derives from it, so a request with `If-None-Match` answers 304 while nothing about the send has changed, written or derived. It carries no pace: to follow the send, read the feed at once from `cursor`.",
       example: {
@@ -1435,7 +1436,19 @@ export function createRouter({
       example: {
         request: { resolution: "unsent" },
         response: {
-          send: sendBrief({ status: "sent", phase: "settling", rev: 58 }),
+          send: sendBrief({
+            status: "sent",
+            phase: "settling",
+            rev: 58,
+            completed_at: 1768467620000,
+            dispatch: {
+              done: 1200,
+              percent: 100,
+              rate_per_min: null,
+              eta_ms: null,
+              duration_ms: 19000,
+            },
+          }),
           cursor: "58.1768467620000",
           resolved: 12,
           completed: true,

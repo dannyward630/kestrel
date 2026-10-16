@@ -92,7 +92,7 @@ const SEND_EXAMPLE = {
     skipped: 1,
     unsent: 0,
   },
-  dispatch: { done: 460, percent: 38, rate_per_min: 230, eta_ms: 185000 },
+  dispatch: { done: 460, percent: 38, rate_per_min: 230, eta_ms: 185000, duration_ms: null },
   delivery: { confirmed: 4, percent_of_accepted: 1 },
   provider: { name: "ses", halt: null },
   phase: "progressing",
@@ -435,9 +435,9 @@ const SEND_FIELDS: ReferenceField[] = [
   },
   {
     name: "dispatch",
-    type: "{ done, percent, rate_per_min, eta_ms }",
+    type: "{ done, percent, rate_per_min, eta_ms, duration_ms }",
     description:
-      "Hand-off progress. `rate_per_min` is a sweep tick's (one a minute); `eta_ms` counts the ticks left, only while handing off.",
+      "Hand-off progress. `rate_per_min` is a sweep tick's (one a minute); `eta_ms` counts the ticks left, only while handing off. For a sent send, `duration_ms` is the elapsed time from `started_at` to `completed_at`, in milliseconds; otherwise null.",
   },
   {
     name: "delivery",

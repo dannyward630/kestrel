@@ -19,6 +19,7 @@ To move a running instance from one version to another, follow [Upgrade to a new
 
 ### Added
 
+- The API reference lists each route's own refusals, one line each with its status, code, and the fields it carries (`409 not_wedged`, with `send`), and states once the ones every route shares, so Claude can expect a refusal such as `window_closed` rather than read it as a failure; `GET /api/reference` carries them as each route's `errors`.
 - The API reference lists the fields each route's request body takes, with each one's type, whether it's required, and its allowed values, so Claude no longer learns them from an example or by guessing; `GET /api/reference` carries them as each route's `body`. The curl command for an upload sends its file as a form.
 - The publisher is emailed, at most once a day and naming no one, when the SES sandbox refuses a signup's confirmation, since the reader was told a link is on its way (SPEC §7, §8).
 - A recent send with no delivery, bounce, or complaint receipt at all an hour after it went out says so, amber, on its record and the dashboard, as `no_receipts` in its conditions: SES's reports are probably not reaching the webhook, so its bounces and complaints suppress no one. Connect Amazon SES now sets a longer SNS retry policy on the topic, and mentions a dead-letter queue as optional (SPEC §8).

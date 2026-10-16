@@ -14,6 +14,7 @@ To move a running instance from one version to another, follow [Upgrade to a new
 
 ### Breaking
 
+- An import plan's `daily_writes_warning` is now `workers_plan_advice`, and means something else: on the Workers Free plan's limits, the advice to move to Workers Paid when the import would leave more than 1,000 confirmed subscribers, rather than a count of the day's database writes. A script that read the old field reads the new one (SPEC §7).
 - A send's halt `cause`, on the API and in the `refused` condition, takes new values so each names its own fix: `opt_in`, `sending_pool`, `unsupported`, `mail_from`, `sandbox`, `paused`, `set_paused`, and this send's own `content` and `invalid_request`. `suspended` now means only an account AWS shut down (a paused account or configuration set is `paused` or `set_paused`), and an SES MAIL FROM refusal is `mail_from` rather than `sender`.
 - A slug sent by hand (`slug` on `POST /api/posts`, `PUT /api/posts/:id`, `PUT /api/posts/:id/settings`, or a schedule) that another post holds is now refused with a 409 `slug_taken`, and one that isn't lowercase words joined by single hyphens with a 400 `slug_invalid`, where before it was numbered or rewritten silently. A change to a sent post's slug is a 409 `slug_permanent` (SPEC §4).
 
@@ -28,6 +29,8 @@ To move a running instance from one version to another, follow [Upgrade to a new
 
 ### Changed
 
+- Workers Free's line is drawn once and said the same everywhere: it suits a list of up to about 1,000 subscribers, and past about 5,000 one send can use up the day's database writes and stop the newsletter until midnight UTC. On Free's limits, the Dashboard and the Subscribers screen recommend Workers Paid once the confirmed list passes 1,000, and so does an import that would take it past; `GET /api/subscribers` carries the words as `workers_plan_advice`. A send's daily-writes warning now goes by its audience alone, over 5,000, and no longer counts the day's imports, which also no longer change a scheduled send. The docs move "about 5,000" to the pair (SPEC §7, §8).
+- The operator's Claude context: the migrate-list skill relays an import plan's `workers_plan_advice`, recommending Workers Paid, in place of the old daily-writes warning, which had it offer to wait until midnight UTC between pieces. `npm run check-context` offers the change to an existing instance.
 - Each SES refusal gets its own advice, checked against AWS's docs, and says who makes the fix: a paused configuration set, a paused or suspended account, a custom MAIL FROM domain's MX record, a missing dedicated IP pool, an account not signed up for SES, and the sandbox are told apart, and a quota spent in the sandbox points to production access. The line now says "No one has been marked unsent because of this", which stays true on a send with readers unsent for their own reasons. Troubleshooting lists each refusal with its fix (SPEC §12).
 - A rate limit that refuses the first request of three retries in a row shows in amber, on the dashboard and the send's page, that `SES_MAX_SEND_RATE` is set above your SES account's rate, rather than reading as an outage with nothing to do (SPEC §12).
 - The operator's Claude context: the sandbox caution says a send holds in the sandbox, mailing only verified addresses, rather than marking the rest unsent.

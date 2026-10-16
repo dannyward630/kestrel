@@ -348,11 +348,12 @@ What each screen shows at each stage:
 
 ### A send the database may not cover
 
-On the Workers Free plan's limits, a send to more than 5,000 recipients may use up the database's daily writes, and a smaller one may on a day imports have already written (SPEC §8). The warning is the server's `daily_writes` condition, in its words, and it never disables a control.
+Workers Free suits a list of up to about 1,000 subscribers; past about 5,000, one send can use up the day's database writes (SPEC §8). On the Workers Free plan's limits, the app says so in two places, each in the server's words, and neither disables a control: a standing notice on a list past 1,000, and a warning on a send to more than 5,000, the server's `daily_writes` condition.
 
-- **The Schedule dialog**, and its Send now view, show it as an amber box under the hint, the not-connected line's look, once the audience is read and found over the threshold. Schedule and Send now stay live: the account may be on Workers Paid, and the review window is where the publisher decides. The dialog reads the audience only on Free's limits, and only once for both views. It judges by the audience alone: what the day's imports wrote is the scheduled send's condition to count, so a send that fits alone but not beside them first warns on the banner, once scheduled, inside its review window. An import that lands while the send is scheduled puts the line on an open banner in place, without a reload.
+- **The Schedule dialog**, and its Send now view, show it as an amber box under the hint, the not-connected line's look, once the audience is read and found over the threshold. Schedule and Send now stay live: the account may be on Workers Paid, and the review window is where the publisher decides. The dialog reads the audience only on Free's limits, and only once for both views. It judges by the audience alone, as the server does, so the dialog and the banner never disagree.
 - **The scheduled banner** carries the same words as a line under the countdown, for as long as the send is scheduled. The line keeps the banner's own violet, led by an amber ⚠️: a warning that blocks nothing shouldn't outweigh the send it's about, and the mark says it's worth a look without coloring the words.
-- **Nowhere else.** It isn't an attention item: nothing is wrong yet, and the health block is for what needs a person now (§1.3).
+- **The list notice** sits under the subscriber count: on the Dashboard under its tiles, on the Subscribers screen inside the summary card under the counts, and on an import's plan when the import would take the list past 1,000. It is the same amber box, and it stays for as long as the list is past 1,000 on Free's limits. Kestrel judges the plan from its config, so its words also cover an account already on Paid whose budget was never raised.
+- **Nowhere else.** Neither is an attention item: nothing is wrong yet, and the health block is for what needs a person now (§1.3).
 
 An import plan's warning about the same limit (SPEC §7) is the same amber box on the import screen (§3, Import subscribers), in the plan's words.
 

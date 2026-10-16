@@ -79,7 +79,7 @@ export async function renderSubscribers(
     root,
     html`
     <div class="spread page-head"><h1>Subscribers</h1><span class="row"><button type="button" class="ghost" id="importSubs">Import</button><button type="button" class="ghost" id="exportSubs">Export</button><button class="primary" id="addSub">Add subscriber</button></span></div>
-    <div class="card sub-summary"><div class="sub-summary-head"><div id="subCounts" class="row muted" role="group" aria-label="Show">Loading…</div><button type="button" class="sub-legend-toggle" id="subLegendToggle" aria-expanded="false" aria-controls="subLegend">Legend</button></div>${legend()}<p class="workers-plan" id="subWorkersPlan" role="status" hidden></p></div>
+    <div class="card sub-summary"><div class="sub-summary-head"><div id="subCounts" class="row muted" role="group" aria-label="Show">Loading…</div><button type="button" class="sub-legend-toggle" id="subLegendToggle" aria-expanded="false" aria-controls="subLegend">Legend</button></div><p class="workers-plan" id="subWorkersPlan" role="status" hidden></p>${legend()}</div>
     ${listToolbar({ statuses: SUB_STATUSES, suppressible: true, searchPlaceholder: "Search email…" })}
     <div id="subList" class="muted">Loading…</div>
     <div id="subPager"></div>`,

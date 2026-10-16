@@ -251,7 +251,7 @@ describe("import view", () => {
       "kept_unsubscribed",
     ]);
     // The plan's warning is shown as the plan returns it.
-    expect($(".imp-warn").textContent).toBe(
+    expect($(".workers-plan").textContent).toBe(
       "On the Workers Free plan’s limits, this import leaves 3,025 confirmed subscribers.",
     );
     // The attestation the plan returns, unticked, and the publication named under it.

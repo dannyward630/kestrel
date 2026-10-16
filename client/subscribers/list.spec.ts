@@ -97,6 +97,8 @@ describe("subscribers view", () => {
     await mount((r, s) => renderSubscribers(undefined, r, s));
     await settle();
     expect($(".sub-summary #subWorkersPlan").hidden).toBe(false);
+    // Under the counts, above the legend, so opening the legend never pushes it down.
+    expect($(".sub-summary-head + #subWorkersPlan + #subLegend")).toBeTruthy();
     expect($("#subWorkersPlan").textContent).toBe(advice);
     expect(fake.unhandled).toEqual([]);
   });

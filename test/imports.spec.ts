@@ -1195,6 +1195,28 @@ describe("an import that leaves the list past what Workers Free suits (SPEC §7)
     expect(leaving.workers_plan_advice).toBe(null); // 1,000 left confirmed
   });
 
+  it("counts the pending subscribers it confirms as joining the confirmed list", async () => {
+    await seedConfirmed(addresses(1_000));
+    await seedPending("waiting@x.io");
+    const confirming = await planOf({ name: "list.txt", text: "waiting@x.io\n" });
+    expect(confirming.counts.confirm_pending).toBe(1);
+    expect(confirming.workers_plan_advice).toMatch(
+      /this import leaves 1,001 confirmed subscribers/,
+    );
+  });
+
+  it("subtracts nothing for a pending subscriber it unsubscribes", async () => {
+    await seedConfirmed(addresses(1_001));
+    await seedPending("waiting@x.io");
+    const leaving = await planOf(
+      { name: "left.txt", text: "waiting@x.io\n" },
+      { plain_list_status: "unsubscribed" },
+    );
+    expect(leaving.counts.mark_unsubscribed).toBe(1);
+    // Still 1,001 confirmed: the one who left was never on the confirmed list.
+    expect(leaving.workers_plan_advice).toMatch(/this import leaves 1,001 confirmed subscribers/);
+  });
+
   it("carries no advice on Workers Paid, and the advice never changes the plan's hash", async () => {
     await seedConfirmed(addresses(1_000));
     const free = await planOf(adding(1));
